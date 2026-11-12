@@ -1,4 +1,18 @@
-# Project exclude paths
-/.gradle/
-/build/
-/build/classes/kotlin/main/
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# SQLite / base de datos local
+*.db
+*.db-journal
+*.sqlite
+
+# Logs
+*.log
