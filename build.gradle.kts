@@ -34,10 +34,11 @@ dependencies {
     implementation(ktorLibs.server.statusPages)
     implementation("io.ktor:ktor-server-auth:3.6.1")
     implementation(libs.logback.classic)
-    implementation(libs.sqldelight.jdbc.driver)
+    implementation(libs.sqldelight.sqlite.driver)
     implementation(libs.sqlite.jdbc)
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
+    implementation(libs.bcrypt)
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)

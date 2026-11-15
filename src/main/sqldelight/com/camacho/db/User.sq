@@ -1,0 +1,15 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at INTEGER NOT NULL
+);
+
+insertUser:
+INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?);
+
+selectUserByUsername:
+SELECT * FROM users WHERE username = ?;
+
+selectUserById:
+SELECT * FROM users WHERE id = ?;
