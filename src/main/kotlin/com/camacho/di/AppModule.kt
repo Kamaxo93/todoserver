@@ -1,15 +1,25 @@
 package com.camacho.di
 
+import com.camacho.config.DatabaseFactory
+import com.camacho.data.repository.SessionRepositoryImpl
+import com.camacho.data.repository.TaskRepositoryImpl
+import com.camacho.data.repository.UserRepositoryImpl
+import com.camacho.domain.repository.SessionRepository
+import com.camacho.domain.repository.TaskRepository
+import com.camacho.domain.repository.UserRepository
+import com.camacho.domain.usecase.LoginUser
+import com.camacho.domain.usecase.RegisterUser
 import org.koin.dsl.module
 
-// TODO: Módulo(s) de Koin. Organiza por capa (data/domain) si crece.
 val appModule = module {
-    // TODO (Fase 1): single { DatabaseFactory.createDatabase(DatabaseFactory.createDriver()) }
-
-    // TODO (Fase 2): bindings de repositorios (interfaz -> implementación)
-    // single<UserRepository> { UserRepositoryImpl(get()) }
-    // single<TaskRepository> { TaskRepositoryImpl(get()) }
-    // single<SessionRepository> { SessionRepositoryImpl(get()) }
-
-    // TODO (Fase 2): use cases como single { ... } si se resuelven por DI
+    single { DatabaseFactory.createDatabase(DatabaseFactory.createDriver()) }
+    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<TaskRepository> { TaskRepositoryImpl(get()) }
+    single<SessionRepository> { SessionRepositoryImpl(get()) }
+    single {
+        RegisterUser(get(), get())
+    }
+    single {
+        LoginUser(get(), get())
+    }
 }

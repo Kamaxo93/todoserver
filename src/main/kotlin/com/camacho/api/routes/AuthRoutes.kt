@@ -1,16 +1,40 @@
 package com.camacho.api.routes
 
-import com.camacho.domain.repository.SessionRepository
-import com.camacho.domain.repository.UserRepository
+import com.camacho.api.dto.AuthResponse
+import com.camacho.api.dto.ErrorResponse
+import com.camacho.api.dto.LoginRequest
+import com.camacho.api.dto.RegisterRequest
+import com.camacho.api.mapper.toUserResponse
+import com.camacho.domain.usecase.LoginUser
+import com.camacho.domain.usecase.RegisterUser
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
+import org.koin.ktor.ext.inject
 
-// TODO (Fase 2): Rutas de autenticación.
-fun Route.authRoutes(userRepository: UserRepository, sessionRepository: SessionRepository) {
+fun Route.authRoutes() {
+    val registerUser by inject<RegisterUser>()
+    val loginUser by inject<LoginUser>()
+
     post("/api/auth/register") {
-        // TODO: recibir RegisterRequest, validar username libre, crear usuario y sesión, responder 201 AuthResponse (o 409).
+        val request = call.receive<RegisterRequest>()
+        try {
+            val result = registerUser(request.username, request.password)
+            call.respond(HttpStatusCode.Created, AuthResponse(result.token, result.user.toUserResponse()))
+        } catch (e: IllegalStateException) {
+            call.respond(HttpStatusCode.Conflict, ErrorResponse("Username already exists"))
+        }
     }
+
     post("/api/auth/login") {
-        // TODO: recibir LoginRequest, verificar credenciales, crear sesión, responder 200 AuthResponse (o 401).
+        val request = call.receive<LoginRequest>()
+        try {
+            val result = loginUser(request.username, request.password)
+            call.respond(HttpStatusCode.OK, AuthResponse(result.token, result.user.toUserResponse()))
+        } catch (e: IllegalStateException) {
+            call.respond(HttpStatusCode.Unauthorized, ErrorResponse("Invalid credentials"))
+        }
     }
 }

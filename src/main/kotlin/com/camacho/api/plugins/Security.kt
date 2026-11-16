@@ -1,15 +1,21 @@
 package com.camacho.api.plugins
 
+import com.camacho.domain.repository.SessionRepository
 import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.UserIdPrincipal
+import io.ktor.server.auth.bearer
+import org.koin.ktor.ext.inject
 
-// TODO (Fase 2): Configuración de autenticación con Ktor Authentication (proveedor bearer).
 fun Application.configureSecurity() {
-    // install(Authentication) {
-    //     bearer("auth-bearer") {
-    //         authenticate { credential ->
-    //             val userId = sessionRepository.findUserIdByToken(credential.token)
-    //             if (userId != null) UserIdPrincipal(userId.toString()) else null
-    //         }
-    //     }
-    // }
+    val sessionRepository by inject<SessionRepository>()
+    install(Authentication) {
+        bearer("auth-bearer") {
+            authenticate { credential ->
+                val userId = sessionRepository.findUserIdByToken(credential.token)
+                if (userId != null) UserIdPrincipal(userId.toString()) else null
+            }
+        }
+    }
 }

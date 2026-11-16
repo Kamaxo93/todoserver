@@ -3,6 +3,7 @@ package com.camacho
 import com.camacho.api.plugins.configureSecurity
 import com.camacho.api.plugins.configureSerialization
 import com.camacho.api.plugins.configureStatusPages
+import com.camacho.api.routes.authRoutes
 import com.camacho.di.appModule
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -30,8 +31,7 @@ fun Application.module() {
     configureStatusPages()
 
     routing {
-        // TODO (Fase 2): inyectar repositorios/use cases vía Koin y montar las rutas
-        // authRoutes(...)
+        authRoutes()
         // taskRoutes(...)
     }
 }
