@@ -7,8 +7,12 @@ import com.camacho.data.repository.UserRepositoryImpl
 import com.camacho.domain.repository.SessionRepository
 import com.camacho.domain.repository.TaskRepository
 import com.camacho.domain.repository.UserRepository
+import com.camacho.domain.usecase.CreateTask
+import com.camacho.domain.usecase.DeleteTask
+import com.camacho.domain.usecase.GetTasks
 import com.camacho.domain.usecase.LoginUser
 import com.camacho.domain.usecase.RegisterUser
+import com.camacho.domain.usecase.UpdateTask
 import org.koin.dsl.module
 
 val appModule = module {
@@ -16,10 +20,13 @@ val appModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<TaskRepository> { TaskRepositoryImpl(get()) }
     single<SessionRepository> { SessionRepositoryImpl(get()) }
-    single {
-        RegisterUser(get(), get())
-    }
-    single {
-        LoginUser(get(), get())
-    }
+
+    // Use cases are stateless -> factory
+    factory { RegisterUser(get(), get()) }
+    factory { LoginUser(get(), get()) }
+    factory { GetTasks(get()) }
+    factory { CreateTask(get()) }
+    factory { DeleteTask(get()) }
+    factory { UpdateTask(get()) }
+
 }

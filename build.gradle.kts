@@ -21,6 +21,7 @@ sqldelight {
     databases {
         create("TodoDatabase") {
             packageName.set("com.camacho.db")
+            dialect("app.cash.sqldelight:sqlite-3-38-dialect:2.4.1")
         }
     }
 }
@@ -42,4 +43,8 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
+}
+
+tasks.named<JavaExec>("run") {
+    mainClass.set("com.camacho.ApplicationKt")
 }

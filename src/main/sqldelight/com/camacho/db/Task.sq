@@ -9,7 +9,7 @@ FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 insertTask:
-INSERT INTO tasks (user_id, title, description, completed, created_at) VALUES (?, ?, ?, ?, ?);
+INSERT INTO tasks (user_id, title, description, completed, created_at) VALUES (?, ?, ?, ?, ?) RETURNING id;
 
 selectTasksByUser:
 SELECT * FROM tasks WHERE user_id = ?;

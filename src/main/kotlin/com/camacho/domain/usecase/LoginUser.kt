@@ -5,9 +5,7 @@ import com.camacho.domain.model.AuthResult
 import com.camacho.domain.repository.SessionRepository
 import com.camacho.domain.repository.UserRepository
 
-// TODO (Fase 2): Caso de uso "Iniciar sesión".
-// 1. Verificar credenciales (comparar hash BCrypt).
-// 2. Crear sesión y devolver (token, user). Si falla, lanzar error de credenciales inválidas.
+
 class LoginUser(
     private val userRepository: UserRepository,
     private val sessionRepository: SessionRepository

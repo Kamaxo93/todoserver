@@ -21,3 +21,5 @@ fun Tasks.toDomain() = Task(
     completed = completed == 1L,
     createdAt = created_at,
 )
+
+fun List<Tasks>.toDomains() = this.map { it.toDomain() }

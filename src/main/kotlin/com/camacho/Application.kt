@@ -1,9 +1,11 @@
 package com.camacho
 
 import com.camacho.api.plugins.configureSecurity
+import com.camacho.api.plugins.configureMonitoring
 import com.camacho.api.plugins.configureSerialization
 import com.camacho.api.plugins.configureStatusPages
 import com.camacho.api.routes.authRoutes
+import com.camacho.api.routes.taskRoutes
 import com.camacho.di.appModule
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -29,9 +31,10 @@ fun Application.module() {
     configureSerialization()
     configureSecurity()
     configureStatusPages()
+    configureMonitoring()
 
     routing {
         authRoutes()
-        // taskRoutes(...)
+        taskRoutes()
     }
 }

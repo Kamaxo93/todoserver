@@ -19,8 +19,8 @@ fun Route.authRoutes() {
     val loginUser by inject<LoginUser>()
 
     post("/api/auth/register") {
-        val request = call.receive<RegisterRequest>()
         try {
+            val request = call.receive<RegisterRequest>()
             val result = registerUser(request.username, request.password)
             call.respond(HttpStatusCode.Created, AuthResponse(result.token, result.user.toUserResponse()))
         } catch (e: IllegalStateException) {
@@ -29,8 +29,8 @@ fun Route.authRoutes() {
     }
 
     post("/api/auth/login") {
-        val request = call.receive<LoginRequest>()
         try {
+            val request = call.receive<LoginRequest>()
             val result = loginUser(request.username, request.password)
             call.respond(HttpStatusCode.OK, AuthResponse(result.token, result.user.toUserResponse()))
         } catch (e: IllegalStateException) {
