@@ -1,0 +1,15 @@
+CREATE TABLE sessions (
+    token TEXT PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    created_at INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+insertSession:
+INSERT INTO sessions (token, user_id, created_at) VALUES (?, ?, ?);
+
+selectSessionByToken:
+SELECT * FROM sessions WHERE token = ?;
+
+deleteSessionByToken:
+DELETE FROM sessions WHERE token = ?;

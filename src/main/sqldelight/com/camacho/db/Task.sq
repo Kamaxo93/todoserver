@@ -1,0 +1,24 @@
+CREATE TABLE tasks (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+user_id INTEGER NOT NULL,
+title TEXT NOT NULL,
+description TEXT,
+completed INTEGER NOT NULL DEFAULT 0,
+created_at INTEGER NOT NULL,
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+insertTask:
+INSERT INTO tasks (user_id, title, description, completed, created_at) VALUES (?, ?, ?, ?, ?);
+
+selectTasksByUser:
+SELECT * FROM tasks WHERE user_id = ?;
+
+selectTaskById:
+SELECT * FROM tasks WHERE id = ? AND user_id = ?;
+
+updateTask:
+UPDATE tasks SET title = ?, description = ?, completed = ? WHERE id = ? AND user_id = ?;
+
+deleteTask:
+DELETE FROM tasks WHERE id = ? AND user_id = ?;
