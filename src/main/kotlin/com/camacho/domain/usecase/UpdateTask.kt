@@ -1,7 +1,24 @@
 package com.camacho.domain.usecase
 
-// TODO (Fase 2): Actualizar una tarea (validar que pertenezca al usuario).
-class UpdateTask {
-    // TODO: inyectar TaskRepository.
-    // TODO: suspend operator fun invoke(id: Long, userId: Long, title: String, description: String?, completed: Boolean): Task?
+import com.camacho.domain.model.Task
+import com.camacho.domain.repository.TaskRepository
+
+class UpdateTask(
+    private val taskRepository: TaskRepository
+) {
+    suspend operator fun invoke(
+        id: Long,
+        userId: Long,
+        title: String,
+        description: String?,
+        completed: Boolean
+    ): Task? =
+        taskRepository.update(
+            id = id,
+            userId = userId,
+            title = title,
+            description = description,
+            completed = completed
+        )
+
 }

@@ -5,7 +5,6 @@ import com.camacho.domain.model.AuthResult
 import com.camacho.domain.repository.SessionRepository
 import com.camacho.domain.repository.UserRepository
 
-// TODO (Fase 2): Caso de uso "Registrar usuario".
 // 1. Comprobar que el username no exista.
 // 2. Hashear la contraseña (BCrypt).
 // 3. Persistir usuario vía UserRepository.

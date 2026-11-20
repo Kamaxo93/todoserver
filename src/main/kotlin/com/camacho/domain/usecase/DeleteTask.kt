@@ -1,7 +1,10 @@
 package com.camacho.domain.usecase
 
-// TODO (Fase 2): Borrar una tarea (validar que pertenezca al usuario).
-class DeleteTask {
-    // TODO: inyectar TaskRepository.
-    // TODO: suspend operator fun invoke(id: Long, userId: Long): Boolean
+import com.camacho.domain.repository.TaskRepository
+
+class DeleteTask(
+    private val taskRepository: TaskRepository
+) {
+    suspend operator fun invoke(id: Long, userId: Long): Boolean =
+        taskRepository.delete(id, userId)
 }
