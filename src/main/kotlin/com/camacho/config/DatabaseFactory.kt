@@ -5,19 +5,18 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.camacho.db.TodoDatabase
 import java.util.Properties
 
-
-// TODO (Fase 1): Configuración de la base de datos SQLite vía SQLDelight (driver JDBC).
-// - Crear un JdbcSqliteDriver("jdbc:sqlite:todo.db")
-// - Ejecutar TodoDatabase.Schema.create(driver)
-// - Devolver un TodoDatabase(driver)
-// La clase TodoDatabase la generará SQLDelight cuando existan los archivos .sq.
 object DatabaseFactory {
 
-    private const val DB_FILE = "todo.db"
+    // Database file path. Configurable via the DB_PATH environment variable so
+    // it can point to a mounted volume inside the Docker container.
+    private val dbFile: String = System.getenv("DB_PATH") ?: "todo.db"
 
     fun createDriver(): SqlDriver =
-        JdbcSqliteDriver("jdbc:sqlite:$DB_FILE", Properties().apply { setProperty("foreign_keys", "true") }, TodoDatabase.Schema)
-
+        JdbcSqliteDriver(
+            "jdbc:sqlite:$dbFile",
+            Properties().apply { setProperty("foreign_keys", "true") },
+            TodoDatabase.Schema
+        )
 
     fun createDatabase(driver: SqlDriver): TodoDatabase =
         TodoDatabase(driver)
